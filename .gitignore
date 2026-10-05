@@ -1,0 +1,44 @@
+# Env
+.env
+.env.local
+
+# Node
+node_modules/
+npm-debug.log
+
+# Rust
+target/
+rustup-init.exe
+
+# DB
+*.dump
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+testText.txt
+# Env
+.env
+
+# Node
+node_modules/
+
+# Rust binary
+rustup-init.exe
+
+# DB dumps
+*.dump
+
+# Misc
+testText.txt
+
+# User uploads / runtime data
+file/
+# User uploads
+file/

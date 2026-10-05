@@ -1,0 +1,68 @@
+/* Контейнер курсов (белая панель) */
+#coursesContainer {
+    background-color: #ffffff;
+    border-radius: 10px; /* Скругление углов */
+    border: 1px solid black;
+    padding: 20px;
+    margin-top: 15px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Элементы списка (li) - используем как разделитель */
+#coursesContainer li {
+    list-style-type: none; /* Убираем точки */
+    border-bottom: 1px solid #eee; /* Тонкая линия между курсами */
+}
+#coursesContainer a {
+    list-style-type: none; /* Убираем точки */
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    color: black;
+}
+/* Убираем линию у последнего элемента */
+#coursesContainer li:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+/* Стиль названия курса (ссылка) */
+.targetcourse {
+    color: #6b78d4; /* Синий цвет как на фото */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 5px;
+    transition: color 0.2s;
+}
+
+.targetcourse:hover {
+    color: #505bb3;
+    text-decoration: underline;
+}
+
+/* Стиль описания и дат (p) */
+#coursesContainer p {
+    margin: 5px 0;
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.field{
+    background-color: #ffffff;
+    border-radius: 10px; /* Скругление углов */
+    border: 1px solid black;
+    padding: 20px;
+    margin-top: 15px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.field h3{
+   padding-bottom: 1rem;
+}
+
+.label{
+   font-weight: bold;
+}
