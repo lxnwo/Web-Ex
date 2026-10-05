@@ -92,26 +92,57 @@ DATABASE_URL_STUDENT=postgres://studentUser:1@localhost/WEB
 
 ### 3. Подготовка базы данных
 
-**Вариант А: через SQL-скрипты**
+> Если забыт пароль суперпользователя `postgres` — сначала сбросьте его (раздел «3.1 Сброс пароля postgres» ниже).
 
-```bash
-# Создайте базу данных
-createdb -U postgres WEB
+**Шаг 1 — создайте базу и роли.** Роли нужны **до** `Creat.sql`, потому что внутри него есть `GRANT ... TO admin/publicUser/studentUser`:
 
-# Примените схему
+```powershell
+psql -U postgres -c "CREATE DATABASE \"WEB\";"
+psql -U postgres -c "CREATE ROLE admin LOGIN PASSWORD 'admin';"
+psql -U postgres -c "CREATE ROLE \"publicUser\" LOGIN PASSWORD '1';"
+psql -U postgres -c "CREATE ROLE \"studentUser\" LOGIN PASSWORD '1';"
+```
+
+> Если какая-то роль уже существует — пропустите соответствующую команду.
+
+**Шаг 2 — примените схему и данные:**
+
+```powershell
 psql -U postgres -d WEB -f Creat.sql
-
-# Загрузите тестовые данные (опционально)
 psql -U postgres -d WEB -f Insert.sql
 ```
 
-**Вариант Б: восстановление из дампа**
+- `Creat.sql` — схема `base`, таблицы и функции (нужен суперпользователь: внутри `CREATE EXTENSION pgcrypto`).
+- `Insert.sql` — тестовые пользователи (пароль у всех `12345`).
 
-```bash
-pg_restore -U postgres -d WEB WEB.dump
-# или для текстового дампа:
-psql -U postgres -d WEB < WEB.dump
-```
+### 3.1 Сброс пароля postgres (если забыт)
+
+1. Откройте `D:\programs\PostgreSQL\data\pg_hba.conf` в Блокноте **от имени администратора**.
+2. В активных строках замените `scram-sha-256` на `trust`:
+
+   ```
+   local   all             all                                     trust
+   host    all             all             127.0.0.1/32            trust
+   host    all             all             ::1/128                 trust
+   ```
+
+3. Сохраните файл и перезапустите службу (PowerShell **от администратора**):
+
+   ```powershell
+   Restart-Service postgresql-x64-17
+   ```
+
+4. Задайте новый пароль:
+
+   ```powershell
+   & 'D:\programs\PostgreSQL\bin\psql.exe' -U postgres -d postgres -c "ALTER USER postgres PASSWORD 'НОВЫЙ_ПАРОЛЬ';"
+   ```
+
+5. Верните `trust` обратно на `scram-sha-256`, сохраните и снова:
+
+   ```powershell
+   Restart-Service postgresql-x64-17
+   ```
 
 ### 4. Установка зависимостей
 
